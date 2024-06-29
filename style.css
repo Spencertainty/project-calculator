@@ -3,13 +3,13 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: lavender
+    background-color: lavender;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .calculator {
     background-color: #fff;
-    border: 1px; solid #ccc;
+    border: 1px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
