@@ -76,11 +76,16 @@ document.querySelectorAll('.btn').forEach(button => {
             if (firstNumber && operator && secondNumber) {
                 const result = operate(operator, firstNumber, secondNumber);
                 updateDisplay(result);
-                firstNumber = result;
+                firstNumber = result.toString();
                 operator = '';
                 secondNumber = '';
+                resultDisplayed = true;
             }
         } else {
+            if (resultDisplayed) {
+                firstNumber = '';
+                resultDisplayed = false;
+            }
             if (operator) {
                 secondNumber += value;
                 updateDisplay(secondNumber);
