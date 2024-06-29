@@ -1,22 +1,29 @@
 let firstNumber = '';
 let operator = '';
 let secondNumber = '';
+let resultDisplayed = false;
 
 function operate(operator, a, b) {
     a = parseFloat(a);
     b = parseFloat(b);
+    let result;
     switch (operator) {
         case '+':
-            return add(a, b);
+            result = add(a, b);
+            break;
         case '-':
-            return subtract(a, b);
+            result = subtract(a, b);
+            break;
         case '*':
-            return multiply(a, b);
+            result = multiply(a, b);
+            break;
         case '/':
-            return divide(a, b);
+            result = divide(a, b);
+            break;
         default:
             return null;            
     }
+    return roundResult(result);
 }
 
 function add(a, b) {
@@ -39,6 +46,10 @@ function divide(a, b) {
     }
 }
 
+function roundResult(result) {
+    return Math.round(result * 1000000000) / 1000000000;
+}
+
 function updateDisplay(value) {
     const display = document.getElementById('display');
     display.textContent = value;
@@ -51,9 +62,16 @@ document.querySelectorAll('.btn').forEach(button => {
             firstNumber = '';
             operator = '';
             secondNumber - '';
+            resultDisplayed = false;
             updateDisplay('0');
         } else if (['+', '-', '*', '/'].includes(value)) {
+            if (firstNumber && operator && secondNumber) {
+                firstNumber = operate(operator, firstNumber, secondNumber).toString();
+                secondNumber = '';
+                updateDisplay(firstNumber);
+            }
             operator = value;
+            resultDisplayed = false;
         } else if (value === '=') {
             if (firstNumber && operator && secondNumber) {
                 const result = operate(operator, firstNumber, secondNumber);
