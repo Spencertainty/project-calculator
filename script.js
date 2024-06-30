@@ -23,7 +23,7 @@ function operate(operator, a, b) {
         default:
             return null;            
     }
-    return roundResult(result);
+    return typeof result === 'number' ? roundResult(result) : result
 }
 
 function add(a, b) {
@@ -40,7 +40,7 @@ function multiply(a, b) {
 
 function divide(a, b) {
     if (b === 0) {
-        return "Error: Cannot divide by zero";
+        return "Snarky Message: Can't divide by zero, silly";
     } else {
         return a / b;
     }
@@ -84,6 +84,8 @@ function handlePercent() {
         updateDisplay(firstNumber);
     }
 }
+
+console.log({ firstNumber, operator, secondNumber, resultDisplayed });
 
 document.querySelectorAll('.btn').forEach(button => {
     button.addEventListener('click', () => {
