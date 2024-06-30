@@ -71,7 +71,7 @@ function handleNegate() {
         updateDisplay(secondNumber);
     } else {
         firstNumber = (parseFloat(firstNumber) * -1).toString();
-        updateDisplay(firstNumber)
+        updateDisplay(firstNumber);
     }
 }
 
@@ -91,9 +91,15 @@ document.querySelectorAll('.btn').forEach(button => {
         if (button.id === 'clear') {
             firstNumber = '';
             operator = '';
-            secondNumber - '';
+            secondNumber = '';
             resultDisplayed = false;
             updateDisplay('0');
+        } else if (button.id === 'percent') {
+            handlePercent();
+        } else if (button.id === 'negate') {
+            handleNegate();
+        }else if (button.id === 'backspace') {
+            handleBackspace();
         } else if (['+', '-', '*', '/'].includes(value)) {
             if (firstNumber && operator && secondNumber) {
                 firstNumber = operate(operator, firstNumber, secondNumber).toString();
