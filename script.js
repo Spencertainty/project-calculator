@@ -55,6 +55,36 @@ function updateDisplay(value) {
     display.textContent = value;
 }
 
+function handleBackspace() {
+    if (operator) {
+        secondNumber = secondNumber.slice(0, -1);
+        updateDisplay(secondNumber || '0');
+    } else {
+        firstNumber = firstNumber.slice(0, -1);
+        updateDisplay(firstNumber || '0');
+    }
+}
+
+function handleNegate() {
+    if (operator) {
+        secondNumber = (parseFloat(secondNumber) * -1).toString();
+        updateDisplay(secondNumber);
+    } else {
+        firstNumber = (parseFloat(firstNumber) * -1).toString();
+        updateDisplay(firstNumber)
+    }
+}
+
+function handlePercent() {
+    if (operator) {
+        secondNumber = (parseFloat(secondNumber) / 100).toString();
+        updateDisplay(secondNumber);
+    } else {
+        firstNumber = (parseFloat(firstNumber) / 100).toString();
+        updateDisplay(firstNumber);
+    }
+}
+
 document.querySelectorAll('.btn').forEach(button => {
     button.addEventListener('click', () => {
         const value = button.textContent;
