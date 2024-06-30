@@ -98,7 +98,7 @@ document.querySelectorAll('.btn').forEach(button => {
             handlePercent();
         } else if (button.id === 'negate') {
             handleNegate();
-        }else if (button.id === 'backspace') {
+        } else if (button.id === 'backspace') {
             handleBackspace();
         } else if (['+', '-', '*', '/'].includes(value)) {
             if (firstNumber && operator && secondNumber) {
