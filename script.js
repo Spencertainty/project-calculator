@@ -89,48 +89,72 @@ console.log({ firstNumber, operator, secondNumber, resultDisplayed });
 
 document.querySelectorAll('.btn').forEach(button => {
     button.addEventListener('click', () => {
-        const value = button.textContent;
-        if (button.id === 'clear') {
-            firstNumber = '';
-            operator = '';
-            secondNumber = '';
-            resultDisplayed = false;
-            updateDisplay('0');
-        } else if (button.id === 'percent') {
-            handlePercent();
-        } else if (button.id === 'negate') {
-            handleNegate();
-        } else if (button.id === 'backspace') {
-            handleBackspace();
-        } else if (['+', '-', '*', '/'].includes(value)) {
-            if (firstNumber && operator && secondNumber) {
-                firstNumber = operate(operator, firstNumber, secondNumber).toString();
-                secondNumber = '';
-                updateDisplay(firstNumber);
-            }
-            operator = value;
-            resultDisplayed = false;
-        } else if (value === '=') {
-            if (firstNumber && operator && secondNumber) {
-                const result = operate(operator, firstNumber, secondNumber);
-                updateDisplay(result);
-                firstNumber = result.toString();
-                operator = '';
-                secondNumber = '';
-                resultDisplayed = true;
-            }
-        } else {
+        const action = button.dataset.action;
+        const number = button.dataset.number;
+        const operatorValue = button.dataset.operator;
+
+        if (action) {
+            switch (action) {
+                case 'clear':
+                    firstNumber = '';
+                    operator = '';
+                    secondNumber = '';
+                    resultDisplayed = false;
+                    updateDisplay('0');
+                    break;
+                case 'percent':
+                    handlePercent();
+                    break;
+                case 'negate':
+                    handleNegate();
+                    break;
+                case 'backspace':
+                    handleBackspace();
+                    break;
+                case 'dot':
+                    if (operator) {
+                        if (!secondNumber.includes('.')) {
+                            secondNumber += '.';
+                            updateDisplay(secondNumber);
+                        }
+                    } else {
+                        if (!firstNumber.includes('.')) {
+                        firstNumber += '.';
+                        updateDisplay(firstNumber);
+                        }
+                    }
+                    break;
+                case 'equals':
+                    if (firstNumber && operator && secondNumber) {
+                        const result = operate(operator, firstNumber, secondNumber);
+                        updateDisplay(result);
+                        firstNumber = result.toString();
+                        operator = '';
+                        secondNumber = '';
+                        resultDisplayed = true;
+                    }
+                    break;
+            }        
+        } else if (number) { 
             if (resultDisplayed) {
                 firstNumber = '';
                 resultDisplayed = false;
             }
             if (operator) {
-                secondNumber += value;
+                secondNumber += number;
                 updateDisplay(secondNumber);
             } else {
-                firstNumber += value;
+                firstNumber += number;
                 updateDisplay(firstNumber);
             }
+        } else if (operatorValue) {
+            if (firstNumber && operator && secondNumber) {
+                firstNumber = operate(operator, firstNumber, secondNumber).toString();
+                secondNumber = '';
+                updateDisplay(firstNumber);
+            }
+            operator = operatorValue;
+            resultDisplayed = false;
         }
     });
 });
