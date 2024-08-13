@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         html = document.createElement("button");
         html.className = button.class;
         html.innerText = button.text;
+        html.id = "button_" + button.text;
         html.addEventListener('click',button.click)
         buttons.appendChild(html);
     });
