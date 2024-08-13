@@ -6,6 +6,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+}
+
 .calculator {
     background-color: #fff;
     border: 1px #ccc;
@@ -25,12 +31,6 @@ body {
     border-top-right-radius: 8px;
 }
 
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-}
-
 .btn {
     background-color: bisque;
     border: none;
@@ -48,12 +48,12 @@ body {
     background-color: grey;
 }
 
-#clear {
+.clear {
     background-color: orangered;
     color: white;
 }
 
-#equals {
+.equals {
     background-color: darkolivegreen;
     color: white;
 }
