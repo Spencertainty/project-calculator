@@ -1,160 +1,86 @@
 let firstNumber = '';
 let operator = '';
 let secondNumber = '';
-let resultDisplayed = false;
+const display = document.getElementById('display');
 
-function operate(operator, a, b) {
-    a = parseFloat(a);
-    b = parseFloat(b);
-    let result;
+function clearAll() {
+    firstNumber = "0";
+    secondNumber = "0";
+    operator = ""
+    display.innerText = secondNumber;
+}
+
+function digit(value) {
+    if (operator == "=") {
+        operator = "";
+        secondNumber = "0";
+    } 
+    if(secondNumber == "0") {
+        secondNumber = value;
+    } else {
+        secondNumber += value;
+    }
+    display.innerText = secondNumber;
+}
+
+function backspace() {
+    if (secondNumber.length > 0) {
+        secondNumber = secondNumber.slice(0, -1);
+    }
+    if (secondNumber.length == 0) {
+        secondNumber = "0"
+    }
+    display.innerText = secondNumber;
+}
+
+function dot() {
+    if (!secondNumber.includes('.')) {
+        secondNumber += '.';
+        display.innerText = secondNumber;
+    }
+}
+
+function percent() {
+    secondNumber = (parseFloat(secondNumber) / 100).toString();
+    display.innerText = secondNumber;        
+}
+
+function negate() {
+    secondNumber = (parseFloat(secondNumber) * -1).toString();
+    display.innerText = secondNumber;        
+}
+
+function operate(value) {
+    if (operator == "" || operator == "=") {
+        firstNumber = secondNumber;
+    } else {
+        firstNumber = calculate();
+    }
+    display.innerText = firstNumber;
+    secondNumber = 0;
+    operator = value;
+}
+
+function equals() {
+    secondNumber = calculate();
+    display.innerText = secondNumber;
+    operator = "=";
+}
+
+function calculate() {
+    const a = parseFloat(firstNumber);
+    const b = parseFloat(secondNumber);
     switch (operator) {
         case '+':
-            result = add(a, b);
-            break;
+            return (a + b).toString();
         case '-':
-            result = subtract(a, b);
-            break;
+            return (a - b).toString();
         case '*':
-            result = multiply(a, b);
-            break;
+            return (a * b).toString();
         case '/':
-            result = divide(a, b);
-            break;
+            answer = Math.round((a / b) * 1000000000) / 1000000000;
+            return answer.toString();
         default:
-            return null;            
-    }
-    return typeof result === 'number' ? roundResult(result) : result
-}
-
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a-b;
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    if (b === 0) {
-        return "Snarky Message: Can't divide by zero, silly";
-    } else {
-        return a / b;
+            console.log("Error, invalid operator")
     }
 }
-
-function roundResult(result) {
-    return Math.round(result * 1000000000) / 1000000000;
-}
-
-function updateDisplay(value) {
-    const display = document.getElementById('display');
-    display.textContent = value;
-}
-
-function handleBackspace() {
-    if (operator) {
-        secondNumber = secondNumber.slice(0, -1);
-        updateDisplay(secondNumber || '0');
-    } else {
-        firstNumber = firstNumber.slice(0, -1);
-        updateDisplay(firstNumber || '0');
-    }
-}
-
-function handleNegate() {
-    if (operator) {
-        secondNumber = (parseFloat(secondNumber) * -1).toString();
-        updateDisplay(secondNumber);
-    } else {
-        firstNumber = (parseFloat(firstNumber) * -1).toString();
-        updateDisplay(firstNumber);
-    }
-}
-
-function handlePercent() {
-    if (operator) {
-        secondNumber = (parseFloat(secondNumber) / 100).toString();
-        updateDisplay(secondNumber);
-    } else {
-        firstNumber = (parseFloat(firstNumber) / 100).toString();
-        updateDisplay(firstNumber);
-    }
-}
-
-console.log({ firstNumber, operator, secondNumber, resultDisplayed });
-
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const action = button.dataset.action;
-        const number = button.dataset.number;
-        const operatorValue = button.dataset.operator;
-
-        if (action) {
-            switch (action) {
-                case 'clear':
-                    firstNumber = '';
-                    operator = '';
-                    secondNumber = '';
-                    resultDisplayed = false;
-                    updateDisplay('0');
-                    break;
-                case 'percent':
-                    handlePercent();
-                    break;
-                case 'negate':
-                    handleNegate();
-                    break;
-                case 'backspace':
-                    handleBackspace();
-                    break;
-                case 'dot':
-                    if (operator) {
-                        if (!secondNumber.includes('.')) {
-                            secondNumber += '.';
-                            updateDisplay(secondNumber);
-                        }
-                    } else {
-                        if (!firstNumber.includes('.')) {
-                        firstNumber += '.';
-                        updateDisplay(firstNumber);
-                        }
-                    }
-                    break;
-                case 'equals':
-                    if (firstNumber && operator && secondNumber) {
-                        const result = operate(operator, firstNumber, secondNumber);
-                        updateDisplay(result);
-                        firstNumber = result.toString();
-                        operator = '';
-                        secondNumber = '';
-                        resultDisplayed = true;
-                    }
-                    break;
-            }        
-        } else if (number) { 
-            if (resultDisplayed) {
-                firstNumber = '';
-                resultDisplayed = false;
-            }
-            if (operator) {
-                secondNumber += number;
-                updateDisplay(secondNumber);
-            } else {
-                firstNumber += number;
-                updateDisplay(firstNumber);
-            }
-        } else if (operatorValue) {
-            if (firstNumber && operator && secondNumber) {
-                firstNumber = operate(operator, firstNumber, secondNumber).toString();
-                secondNumber = '';
-                updateDisplay(firstNumber);
-            }
-            operator = operatorValue;
-            resultDisplayed = false;
-        }
-    });
-});

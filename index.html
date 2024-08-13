@@ -16,26 +16,26 @@
   <div class="calculator">
     <div class="display" id ="display">0</div>
     <div class="buttons">
-      <button class="btn" data-action="clear">C</button>
-      <button class="btn" data-action="percent">%</button>
-      <button class="btn" data-action="negate">+/-</button>
-      <button class="btn" data-operator="/">/</button>
-      <button class="btn" data-number="7">7</button>
-      <button class="btn" data-number="8">8</button>
-      <button class="btn" data-number="9">9</button>
-      <button class="btn" data-operator="*">*</button>
-      <button class="btn" data-number="4">4</button>
-      <button class="btn" data-number="5">5</button>
-      <button class="btn" data-number="6">6</button>
-      <button class="btn" data-operator="-">-</button>
-      <button class="btn" data-number="1">1</button>
-      <button class="btn" data-number="2">2</button>
-      <button class="btn" data-number="3">3</button>
-      <button class="btn" data-operator="+">+</button>
-      <button class="btn" data-action="dot">.</button>
-      <button class="btn" data-number="0">0</button>
-      <button class="btn" data-action="backspace"><</button>
-      <button class="btn" data-action="equals">=</button>
+      <button class="btn" onclick="clearAll()" id="clear">C</button>
+      <button class="btn" onclick="percent()">%</button>
+      <button class="btn" onclick="negate()">+/-</button>
+      <button class="btn" onclick="operate('/')">/</button>
+      <button class="btn" onclick="digit('7')">7</button>
+      <button class="btn" onclick="digit('8')">8</button>
+      <button class="btn" onclick="digit('9')">9</button>
+      <button class="btn" onclick="operate('*')">*</button>
+      <button class="btn" onclick="digit('4')">4</button>
+      <button class="btn" onclick="digit('5')">5</button>
+      <button class="btn" onclick="digit('6')">6</button>
+      <button class="btn" onclick="operate('-')">-</button>
+      <button class="btn" onclick="digit('1')">1</button>
+      <button class="btn" onclick="digit('2')">2</button>
+      <button class="btn" onclick="digit('3')">3</button>
+      <button class="btn" onclick="operate('+')">+</button>
+      <button class="btn" onclick="dot()">.</button>
+      <button class="btn" onclick="digit('0')">0</button>
+      <button class="btn" onclick="backspace()"><</button>
+      <button class="btn" onclick="equals()" id="equals">=</button>
     </div>
   </div>
 
